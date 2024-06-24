@@ -34,4 +34,9 @@ WARN  found no layout file for "html" for kind "section": You should create a te
 WARN  found no layout file for "html" for kind "taxonomy": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
 #+end_src
 
-I found help for this issue on the hugo forum [[https://discourse.gohugo.io/t/do-i-need-to-re-add-modules-when-using-cloned-repositories/35863/11][here]]. When in doubt blame the M1 chip. So, I started the project all over again using my desktop.
+I found help for this issue on the hugo forum [[https://discourse.gohugo.io/t/do-i-need-to-re-add-modules-when-using-cloned-repositories/35863/11][here]]. When in doubt blame the M1 chip. So, I started the project all over again using my desktop and pushed the code to github. Then I pulled the code on my macbook and the issue was still there. So I tried searching again and found that I didn't have the code from the theme that I'm using. Now the warnings make sense. I noticed the empty theme directory. To fix this I ran
+
+#+begin_src bash
+git submodule init
+git submodule update
+#+end_src
