@@ -1,0 +1,37 @@
+#+title: "How I Made This Blog"
+#+date: 2024-06-24T14:30:02+02:00
+#+draft: false
+
+The idea of starting my own blog is one that has been on my mind for a couple of years now. I'm really happy that I finally decided to do something about it. The fate I have in mind for this blog is to contain the treasures I'll collect during my learning journey.
+
+The first topic on our hands is the creation of this blog.
+
+Technologies used:
+- hugo
+- nginx
+- docker
+- cloudflare
+- domain from mkhost
+- caddy ? ddclient?
+
+Each of these are explained in the Technologies section.
+
+* Step by step process
+I knew that I didn't want to make a fancy site with custom css and I didn't really need to write my blogs in the web browser, so I decided to use a static site generator. Hugo has a templating system that can convert Markdown and Org files into HTML. It was a breeze setting up hugo.
+
+First I visited hugo's website and opened the [[https://gohugo.io/getting-started/quick-start/][quick start]] section. There are 7 commands that are already explained by them, so I won't repeat the same text here. It's really simple, you just install hugo, add a theme you like, and run ~hugo server~.
+
+* Problems I encountered
+
+I first started the project on my boyfrend's thinkpad, and then zipped and shipped the code to my macbook. From there I created a repo and pushed it to github. Now when I wanted to continue my work from my desktop, I ran into an issue. The project was not working properly and no files were missing. I couldn't create new content and any changes made to the files were not shown, no html was being updated.
+
+I was getting these warnings:
+
+#+begin_src bash
+WARN  found no layout file for "html" for kind "home": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+WARN  found no layout file for "html" for kind "page": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+WARN  found no layout file for "html" for kind "section": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+WARN  found no layout file for "html" for kind "taxonomy": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+#+end_src
+
+I found help for this issue on the hugo forum [[https://discourse.gohugo.io/t/do-i-need-to-re-add-modules-when-using-cloned-repositories/35863/11][here]]. When in doubt blame the M1 chip. So, I started the project all over again using my desktop.
