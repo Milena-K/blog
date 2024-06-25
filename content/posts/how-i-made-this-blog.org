@@ -1,4 +1,4 @@
-#+title: "How I Made This Blog"
+#+title: How I Made This Blog
 #+date: 2024-06-24T14:30:02+02:00
 #+draft: false
 
@@ -11,15 +11,79 @@ Technologies used:
 - nginx
 - docker
 - cloudflare
-- domain from mkhost
-- caddy ? ddclient?
-
-Each of these are explained in the Technologies section.
 
 * Step by step process
+** Creating the static files with hugo
 I knew that I didn't want to make a fancy site with custom css and I didn't really need to write my blogs in the web browser, so I decided to use a static site generator. Hugo has a templating system that can convert Markdown and Org files into HTML. It was a breeze setting up hugo.
 
-First I visited hugo's website and opened the [[https://gohugo.io/getting-started/quick-start/][quick start]] section. There are 7 commands that are already explained by them, so I won't repeat the same text here. It's really simple, you just install hugo, add a theme you like, and run ~hugo server~.
+First I visited hugo's website and opened the [[https://gohugo.io/getting-started/quick-start/][quick start]] section. There are 7 commands that are already explained by them, so I won't repeat the same text here. It's really simple, you just install hugo, add a theme you like, and run this command.
+#+begin_src bash
+hugo server -D # include draft content
+#+end_src
+
+To add content, a new blog for example, you can run
+#+begin_src bash
+hugo new content content/posts/name-of-blog.org
+#+end_src
+
+Hugo knows what template to use by looking at the name of the second directory. For me that's ~posts~. There are a couple of basic templates and depending on the theme you are using there may be a couple more.
+
+So that's that for creating the blog. To generate the static pages you just run ~hugo~. Or you have the option to minify some files, like HTML, and enable to run some cleanup tasks (remove unused cache files) after the build by running this command
+#+begin_src bash
+hugo --gc --minify
+#+end_src
+
+** Serve the files to clients with nginx and docker
+
+The next step is to deploy the project. There are several ways to deploy, and they are listed in their [[https://gohugo.io/hosting-and-deployment/][documentation]]. The one I chose is =Deploy with Rclone=. The server I'm using to host my blog is my boyfriend's home server. He made me an account on the server and gave me ssh access.
+
+I made this script to transfer the files to the server.
+#+begin_src bash
+USER=milena
+HOST=debian
+DIR=/home/milena/services/milena_blog/blog # the directory where your web site files should go
+
+hugo && rsync -avz --delete public/ ${USER}@${HOST}:${DIR} # this will delete everything on the server that's not in the local public folder
+
+exit 0
+#+end_src
+
+You should change the file to an executable by running this command
+#+begin_src bash
+chmod +x name_of_file
+#+end_src
+
+And run it every time you have a finished blog that you want to share with the world.
+#+begin_src bash
+./name_of_file
+#+end_src
+
+But there are some other things we have to set up before the blog becomes ready to be shared. Once the files are on the server, we need to create a Dockerfile.
+#+begin_src docker
+FROM nginx:stable-alpine
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+#+end_src
+
+You should put your =Dockerfile= in a seperate directory than your code. So for example the directory I'm using is called =blog= and the parent direcory where the =Dockerfile= is is called =milena_blog=. That way when you run the deploy script your Dockerfile won't get deleted.
+
+And then using the docker cli I run these commands
+#+begin_src bash
+docker build -t blog_image . && \
+docker run -dit -p 1313:80 -v ./blog:/usr/share/nginx/html --restart always --name blog_container blog_image
+#+end_src
+
+I mapped the 1313 port on the host to the 80 port of the docker container. Also, I told the container to mount the host directory =./blog= to the one in it called =/usr/share/nginx/html=. This way every new blog that get's transfered to =./blog= is also visible to the docker container. If the server get's rebooted for some reason, I would want my docker to start running again so I added the --restart flag and set it to always.
+
+** Making it work from anywhere
+
+Ok, so now if I visit =localhost:1313= my blog should be working. But that means that the blog only works for anyone accessing it from our local network. I want to be able to access it from anywhere. And for that I need to have my own place on the internet. I need a domain. My boyfrend gifted me this domain =milena.mk= <3. You can buy yours at any domain name website, mine was from [[https://mkhost.com/mk/][Mkhost]].
+
+Now because the server has a dynamic IP address, I need to use a service like =Cloudflare=. Creating an account was very easy and all I needed to do was follow the instructions for setting up the DNS records. For the record of type =A= in the column Content enter the IP of the server. You can find that out by searching "what is my ip", and also disable the Proxy status.
+
+Now, all that is left is to copy the two =Nameservers=, and paste them in your configuration on the domain name website you chose.
+
+There are other requirements needed from the server side, like a service that informs Cloudflare of it's current IP address. In my case that's =ddclient=.
 
 * Problems I encountered
 
@@ -34,7 +98,7 @@ WARN  found no layout file for "html" for kind "section": You should create a te
 WARN  found no layout file for "html" for kind "taxonomy": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
 #+end_src
 
-I found help for this issue on the hugo forum [[https://discourse.gohugo.io/t/do-i-need-to-re-add-modules-when-using-cloned-repositories/35863/11][here]]. When in doubt blame the M1 chip. So, I started the project all over again using my desktop and pushed the code to github. Then I pulled the code on my macbook and the issue was still there. So I tried searching again and found that I didn't have the code from the theme that I'm using. Now the warnings make sense. I noticed the empty theme directory. To fix this I ran
+I found help for this issue on the hugo forum [[https://discourse.gohugo.io/t/do-i-need-to-re-add-modules-when-using-cloned-repositories/35863/11][here]]. When in doubt blame the M1 chip. So, I started the project all over again using my desktop and pushed the code to github. Then I pulled the code on my macbook and the issue was still there. So I tried searching again and found that I didn't have the code from the theme that I'm using. Now the warnings made sense. I noticed the empty theme directory. To fix this I ran
 
 #+begin_src bash
 git submodule init

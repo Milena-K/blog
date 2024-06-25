@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
-    <link>http://localhost:36327/</link>
-    <description>Recent content on My New Hugo Site</description>
+    <title>Milena&#39;s blog</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on Milena&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Jun 2024 17:15:55 +0200</lastBuildDate><atom:link href="http://localhost:36327/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 24 Jun 2024 14:30:02 +0200</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>&#34;How I Made This Blog&#34;</title>
-      <link>http://localhost:36327/how-i-made-this-blog/</link>
-      <pubDate>Mon, 24 Jun 2024 17:15:55 +0200</pubDate>
-      
-      <guid>http://localhost:36327/how-i-made-this-blog/</guid>
-      <description>test tetsi</description>
-    </item>
-    
-    <item>
-      <title>&#34;How I Made This Blog&#34;</title>
-      <link>http://localhost:36327/posts/how-i-made-this-blog/</link>
+      <title>How I Made This Blog</title>
+      <link>http://localhost:1313/posts/how-i-made-this-blog/</link>
       <pubDate>Mon, 24 Jun 2024 14:30:02 +0200</pubDate>
       
-      <guid>http://localhost:36327/posts/how-i-made-this-blog/</guid>
+      <guid>http://localhost:1313/posts/how-i-made-this-blog/</guid>
       <description>The idea of starting my own blog is one that has been on my mind for a couple of years now. I&amp;#39;m really happy that I finally decided to do something about it. The fate I have in mind for this blog is to contain the treasures I&amp;#39;ll collect during my learning journey.
 The first topic on our hands is the creation of this blog.
 Technologies used:
-hugo nginx docker cloudflare domain from mkhost caddy ?</description>
+hugo nginx docker cloudflare Step by step process Creating the static files with hugo I knew that I didn&amp;#39;t want to make a fancy site with custom css and I didn&amp;#39;t really need to write my blogs in the web browser, so I decided to use a static site generator.</description>
     </item>
     
   </channel>

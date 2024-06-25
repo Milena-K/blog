@@ -16,11 +16,11 @@
 
 
 <!DOCTYPE html>
-<html lang='en-us'><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=36327&amp;path=livereload" data-no-instant defer></script>
+<html lang='en-us'><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
-    <link rel="shortcut icon" href='http://localhost:36327/favicon.ico' type="image/x-icon">
+    <link rel="shortcut icon" href='http://localhost:1313/favicon.ico' type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>&#34;How I Made This Blog&#34; - My New Hugo Site</title>
+    <title>How I Made This Blog - Milena&#39;s blog</title>
 
     
 
@@ -29,13 +29,13 @@
     
 
     
-        <meta property="og:url" content="http://localhost:36327/posts/how-i-made-this-blog/">
-  <meta property="og:site_name" content="My New Hugo Site">
-  <meta property="og:title" content="&#34;How I Made This Blog&#34;">
+        <meta property="og:url" content="http://localhost:1313/posts/how-i-made-this-blog/">
+  <meta property="og:site_name" content="Milena&#39;s blog">
+  <meta property="og:title" content="How I Made This Blog">
   <meta property="og:description" content="The idea of starting my own blog is one that has been on my mind for a couple of years now. I&#39;m really happy that I finally decided to do something about it. The fate I have in mind for this blog is to contain the treasures I&#39;ll collect during my learning journey.
 The first topic on our hands is the creation of this blog.
 Technologies used:
-hugo nginx docker cloudflare domain from mkhost caddy ?">
+hugo nginx docker cloudflare Step by step process Creating the static files with hugo I knew that I didn&#39;t want to make a fancy site with custom css and I didn&#39;t really need to write my blogs in the web browser, so I decided to use a static site generator.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -47,11 +47,11 @@ hugo nginx docker cloudflare domain from mkhost caddy ?">
     
         
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="&#34;How I Made This Blog&#34;">
+  <meta name="twitter:title" content="How I Made This Blog">
   <meta name="twitter:description" content="The idea of starting my own blog is one that has been on my mind for a couple of years now. I&#39;m really happy that I finally decided to do something about it. The fate I have in mind for this blog is to contain the treasures I&#39;ll collect during my learning journey.
 The first topic on our hands is the creation of this blog.
 Technologies used:
-hugo nginx docker cloudflare domain from mkhost caddy ?">
+hugo nginx docker cloudflare Step by step process Creating the static files with hugo I knew that I didn&#39;t want to make a fancy site with custom css and I didn&#39;t really need to write my blogs in the web browser, so I decided to use a static site generator.">
 
     <link rel="stylesheet" href="/style.css" integrity="">
 
@@ -125,7 +125,7 @@ hugo nginx docker cloudflare domain from mkhost caddy ?">
     
         <div class="brand">
             <div>
-                <a href="/">My New Hugo Site</a>
+                <a href="/">Milena's blog</a>
             </div>
         </div>
     </div>
@@ -171,8 +171,16 @@ hugo nginx docker cloudflare domain from mkhost caddy ?">
             <nav id="TableOfContents">
 <ul>
 <li><a href="#headline-1">Step by step process</a>
+<ul>
+<li><a href="#headline-2">Creating the static files with hugo</a>
 </li>
-<li><a href="#headline-2">Problems I encountered</a>
+<li><a href="#headline-3">Serve the files to clients with nginx and docker</a>
+</li>
+<li><a href="#headline-4">Making it work from anywhere</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-5">Problems I encountered</a>
 </li>
 </ul>
 </nav>
@@ -200,25 +208,106 @@ Technologies used:</p>
 <li>nginx</li>
 <li>docker</li>
 <li>cloudflare</li>
-<li>domain from mkhost</li>
-<li>caddy ? ddclient?</li>
 </ul>
-<p>Each of these are explained in the Technologies section.</p>
 <div id="outline-container-headline-1" class="outline-2">
 <h2 id="headline-1">
 Step by step process
 </h2>
 <div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-3">
+<h3 id="headline-2">
+Creating the static files with hugo
+</h3>
+<div id="outline-text-headline-2" class="outline-text-3">
 <p>I knew that I didn&#39;t want to make a fancy site with custom css and I didn&#39;t really need to write my blogs in the web browser, so I decided to use a static site generator. Hugo has a templating system that can convert Markdown and Org files into HTML. It was a breeze setting up hugo.</p>
 <p>
-First I visited hugo&#39;s website and opened the <a href="https://gohugo.io/getting-started/quick-start/">quick start</a> section. There are 7 commands that are already explained by them, so I won&#39;t repeat the same text here. It&#39;s really simple, you just install hugo, add a theme you like, and run <code>hugo server</code>.</p>
+First I visited hugo&#39;s website and opened the <a href="https://gohugo.io/getting-started/quick-start/">quick start</a> section. There are 7 commands that are already explained by them, so I won&#39;t repeat the same text here. It&#39;s really simple, you just install hugo, add a theme you like, and run this command.</p>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server -D <span style="color:#75715e"># include draft content</span></span></span></code></pre></div>
+</div>
+<p>
+To add content, a new blog for example, you can run</p>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new content content/posts/name-of-blog.org</span></span></code></pre></div>
+</div>
+<p>
+Hugo knows what template to use by looking at the name of the second directory. For me that&#39;s <code>posts</code>. There are a couple of basic templates and depending on the theme you are using there may be a couple more.</p>
+<p>
+So that&#39;s that for creating the blog. To generate the static pages you just run <code>hugo</code>. Or you have the option to minify some files, like HTML, and enable to run some cleanup tasks (remove unused cache files) after the build by running this command</p>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo --gc --minify</span></span></code></pre></div>
 </div>
 </div>
-<div id="outline-container-headline-2" class="outline-2">
-<h2 id="headline-2">
+</div>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+Serve the files to clients with nginx and docker
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+The next step is to deploy the project. There are several ways to deploy, and they are listed in their <a href="https://gohugo.io/hosting-and-deployment/">documentation</a>. The one I chose is <code class="verbatim">Deploy with Rclone</code>. The server I&#39;m using to host my blog is my boyfriend&#39;s home server. He made me an account on the server and gave me ssh access.</p>
+<p>
+I made this script to transfer the files to the server.</p>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>USER<span style="color:#f92672">=</span>milena
+</span></span><span style="display:flex;"><span>HOST<span style="color:#f92672">=</span>debian
+</span></span><span style="display:flex;"><span>DIR<span style="color:#f92672">=</span>/home/milena/services/milena_blog/blog <span style="color:#75715e"># the directory where your web site files should go</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hugo <span style="color:#f92672">&amp;&amp;</span> rsync -avz --delete public/ <span style="color:#e6db74">${</span>USER<span style="color:#e6db74">}</span>@<span style="color:#e6db74">${</span>HOST<span style="color:#e6db74">}</span>:<span style="color:#e6db74">${</span>DIR<span style="color:#e6db74">}</span> <span style="color:#75715e"># this will delete everything on the server that&#39;s not in the local public folder</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>exit <span style="color:#ae81ff">0</span></span></span></code></pre></div>
+</div>
+<p>
+You should change the file to an executable by running this command</p>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod +x name_of_file</span></span></code></pre></div>
+</div>
+<p>
+And run it every time you have a finished blog that you want to share with the world.</p>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./name_of_file</span></span></code></pre></div>
+</div>
+<p>
+But there are some other things we have to set up before the blog becomes ready to be shared. Once the files are on the server, we need to create a Dockerfile.</p>
+<div class="src src-docker">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-docker" data-lang="docker"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> nginx:stable-alpine</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 80</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;nginx&#34;</span>, <span style="color:#e6db74">&#34;-g&#34;</span>, <span style="color:#e6db74">&#34;daemon off;&#34;</span>]</span></span></code></pre></div>
+</div>
+<p>
+You should put your <code class="verbatim">Dockerfile</code> in a seperate directory than your code. So for example the directory I&#39;m using is called <code class="verbatim">blog</code> and the parent direcory where the <code class="verbatim">Dockerfile</code> is is called <code class="verbatim">milena_blog</code>. That way when you run the deploy script your Dockerfile won&#39;t get deleted.</p>
+<p>
+And then using the docker cli I run these commands</p>
+<div class="src src-bash">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker build -t blog_image . <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>docker run -dit -p 1313:80 -v ./blog:/usr/share/nginx/html --restart always --name blog_container blog_image</span></span></code></pre></div>
+</div>
+<p>
+I mapped the 1313 port on the host to the 80 port of the docker container. Also, I told the container to mount the host directory <code class="verbatim">./blog</code> to the one in it called <code class="verbatim">/usr/share/nginx/html</code>. This way every new blog that get&#39;s transfered to <code class="verbatim">./blog</code> is also visible to the docker container. If the server get&#39;s rebooted for some reason, I would want my docker to start running again so I added the –restart flag and set it to always.</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+Making it work from anywhere
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<p>
+Ok, so now if I visit <code class="verbatim">localhost:1313</code> my blog should be working. But that means that the blog only works for anyone accessing it from our local network. I want to be able to access it from anywhere. And for that I need to have my own place on the internet. I need a domain. My boyfrend gifted me this domain <code class="verbatim">milena.mk</code> &lt;3. You can buy yours at any domain name website, mine was from <a href="https://mkhost.com/mk/">Mkhost</a>.</p>
+<p>
+Now because the server has a dynamic IP address, I need to use a service like <code class="verbatim">Cloudflare</code>. Creating an account was very easy and all I needed to do was follow the instructions for setting up the DNS records. For the record of type <code class="verbatim">A</code> in the column Content enter the IP of the server. You can find that out by searching &#34;what is my ip&#34;, and also disable the Proxy status.</p>
+<p>
+Now, all that is left is to copy the two <code class="verbatim">Nameservers</code>, and paste them in your configuration on the domain name website you chose.</p>
+<p>
+There are other requirements needed from the server side, like a service that informs Cloudflare of it&#39;s current IP address. In my case that&#39;s <code class="verbatim">ddclient</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-2">
+<h2 id="headline-5">
 Problems I encountered
 </h2>
-<div id="outline-text-headline-2" class="outline-text-2">
+<div id="outline-text-headline-5" class="outline-text-2">
 <p>
 I first started the project on my boyfrend&#39;s thinkpad, and then zipped and shipped the code to my macbook. From there I created a repo and pushed it to github. Now when I wanted to continue my work from my desktop, I ran into an issue. The project was not working properly and no files were missing. I couldn&#39;t create new content and any changes made to the files were not shown, no html was being updated.</p>
 <p>
@@ -230,7 +319,7 @@ I was getting these warnings:</p>
 </span></span><span style="display:flex;"><span>WARN  found no layout file <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#34;html&#34;</span> <span style="color:#66d9ef">for</span> kind <span style="color:#e6db74">&#34;taxonomy&#34;</span>: You should create a template file which matches Hugo Layouts Lookup Rules <span style="color:#66d9ef">for</span> this combination.</span></span></code></pre></div>
 </div>
 <p>
-I found help for this issue on the hugo forum <a href="https://discourse.gohugo.io/t/do-i-need-to-re-add-modules-when-using-cloned-repositories/35863/11">here</a>. When in doubt blame the M1 chip. So, I started the project all over again using my desktop and pushed the code to github. Then I pulled the code on my macbook and the issue was still there. So I tried searching again and found that I didn&#39;t have the code from the theme that I&#39;m using. Now the warnings make sense. I noticed the empty theme directory. To fix this I ran</p>
+I found help for this issue on the hugo forum <a href="https://discourse.gohugo.io/t/do-i-need-to-re-add-modules-when-using-cloned-repositories/35863/11">here</a>. When in doubt blame the M1 chip. So, I started the project all over again using my desktop and pushed the code to github. Then I pulled the code on my macbook and the issue was still there. So I tried searching again and found that I didn&#39;t have the code from the theme that I&#39;m using. Now the warnings made sense. I noticed the empty theme directory. To fix this I ran</p>
 <div class="src src-bash">
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule init
 </span></span><span style="display:flex;"><span>git submodule update</span></span></code></pre></div>

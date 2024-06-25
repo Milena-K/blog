@@ -1,6 +1,0 @@
-#+title: "How I Made This Blog"
-#+date: 2024-06-24T17:15:55+02:00
-#+draft: false
-
-* test
-tetsi
